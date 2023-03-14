@@ -1,38 +1,55 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Input } from 'antd';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-export const TodoItem: React.FC = () => {
+import * as S from './components';
+
+interface TodoItemInterface {
+  dateOfCreate: string;
+  description: string;
+  id: string;
+  onChangeTodoItemDescription: (id: string, description: string) => void;
+}
+
+export const TodoItem: React.FC<TodoItemInterface> = ({
+  dateOfCreate,
+  description,
+  onChangeTodoItemDescription,
+  id,
+}) => {
   const [editMode, setEditMode] = useState<Boolean>(false);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeTodoItemDescription(id, e.currentTarget.value);
+  };
+
+  const onBlurEffect = () => {
+    setEditMode(false);
+  };
+
+  const handleEditMode = () => {
+    setEditMode(!editMode);
+  };
 
   return (
     <Col span={6}>
-      <Card hoverable>
+      <Card hoverable style={{ minWidth: '250px' }}>
         {editMode ? (
-          <Input autoFocus onBlur={() => setEditMode(false)} />
+          <Input
+            autoFocus
+            onBlur={onBlurEffect}
+            value={description}
+            onChange={handleInputChange}
+          />
         ) : (
-          <span
-            onClick={() => {
-              setEditMode(!editMode);
-            }}
-          >
-            fdlsfkd ;lsfdl;sk f;dskfd;s fdskf;lsd kflsd kfsdl;fksd;fk sd;fklsdd
-            dsadsa dsa dsad sads adsa d as das dsa ds adasjdsajk daskdhaskjd
-            sadshd sa dsa dsadsadkl;dsakl;dskalkl;das dkasl;kl;das;ld;lska
-            dksl;aldk as;dklsaak
-          </span>
+          <span onClick={handleEditMode}>{description}</span>
         )}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '25px',
-          }}
-        >
-          <span>{new Date().toLocaleTimeString()}</span>
+
+        <S.MetaWrapper>
+          <span>{dateOfCreate}</span>
 
           <Button icon={<DeleteOutlined />} size="small" />
-        </div>
+        </S.MetaWrapper>
       </Card>
     </Col>
   );
