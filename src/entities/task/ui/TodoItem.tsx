@@ -4,7 +4,7 @@ import React, { ChangeEvent, useState } from 'react';
 
 import * as S from './components';
 
-interface TodoItemInterface {
+export interface TodoItemInterface {
   dateOfCreate: string;
   description: string;
   id: string;
