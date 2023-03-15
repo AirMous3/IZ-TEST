@@ -20,7 +20,7 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
   id,
 }) => {
   const dispatch = useAppDispatch();
-  const [editMode, setEditMode] = useState<Boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [inputState, setInputState] = useState<string>(description);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
