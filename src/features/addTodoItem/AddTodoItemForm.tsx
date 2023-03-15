@@ -36,6 +36,7 @@ export const AddTodoItemForm: React.FC = () => {
         placeholder="Добавить задачу"
         value={inputState}
         onChange={handleInputChange}
+        onPressEnter={handleButtonClick}
       />
       <Button icon={<CheckOutlined />} onClick={handleButtonClick} />
     </S.Container>

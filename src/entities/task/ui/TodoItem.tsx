@@ -2,6 +2,9 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Input } from 'antd';
 import React, { ChangeEvent, useState } from 'react';
 
+import { useAppDispatch } from '@/app';
+import { changeTaskDescription } from '@/entities';
+
 import * as S from './components';
 
 export interface TodoItemInterface {
@@ -15,13 +18,17 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
   description,
   id,
 }) => {
+  const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState<Boolean>(false);
+  const [inputState, setInputState] = useState<string>(description);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // onChangeTodoItemDescription(id, e.currentTarget.value);
+    setInputState(e.currentTarget.value);
   };
 
-  const onBlurEffect = () => {
+  const handleTaskDescriptionChange= () => {
+    if (inputState.length === 0) return;
+    dispatch(changeTaskDescription({ id, description: inputState }));
     setEditMode(false);
   };
 
@@ -35,9 +42,10 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
         {editMode ? (
           <Input
             autoFocus
-            onBlur={onBlurEffect}
-            value={description}
+            onBlur={handleTaskDescriptionChange}
+            value={inputState}
             onChange={handleInputChange}
+            onPressEnter={handleTaskDescriptionChange}
           />
         ) : (
           <span onClick={handleEditMode}>{description}</span>
