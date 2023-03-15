@@ -1,11 +1,12 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Input } from 'antd';
+import { Button, Col, Input } from 'antd';
 import React, { ChangeEvent, useState } from 'react';
 
 import { useAppDispatch } from '@/app';
-import { changeTaskDescription } from '@/entities';
+import { changeTaskDescription, removeTask } from '@/entities';
 
 import * as S from './components';
+
 
 export interface TodoItemInterface {
   dateOfCreate: string;
@@ -26,7 +27,7 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
     setInputState(e.currentTarget.value);
   };
 
-  const handleTaskDescriptionChange= () => {
+  const handleTaskDescriptionChange = () => {
     if (inputState.length === 0) return;
     dispatch(changeTaskDescription({ id, description: inputState }));
     setEditMode(false);
@@ -36,9 +37,13 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
     setEditMode(!editMode);
   };
 
+  const handleTaskDelete = () => {
+    dispatch(removeTask({ id }));
+  };
+
   return (
-    <Col span={6}>
-      <Card hoverable style={{ minWidth: '250px' }}>
+    <Col span={16}>
+      <S.TodoItemCard hoverable>
         {editMode ? (
           <Input
             autoFocus
@@ -54,9 +59,13 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
         <S.MetaWrapper>
           <span>{dateOfCreate}</span>
 
-          <Button icon={<DeleteOutlined />} size="small" />
+          <Button
+            icon={<DeleteOutlined />}
+            size="small"
+            onClick={handleTaskDelete}
+          />
         </S.MetaWrapper>
-      </Card>
+      </S.TodoItemCard>
     </Col>
   );
 };
