@@ -22,7 +22,7 @@ export const AddTodoItemForm: React.FC = () => {
     const task = {
       id: uuidv4(),
       description: inputState,
-      date: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString(),
     };
 
     dispatch(addTaskToList({ task }));
