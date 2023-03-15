@@ -7,7 +7,6 @@ import { changeTaskDescription, removeTask } from '@/entities';
 
 import * as S from './components';
 
-
 export interface TodoItemInterface {
   dateOfCreate: string;
   description: string;
@@ -38,7 +37,7 @@ export const TodoItem: React.FC<TodoItemInterface> = ({
   };
 
   const handleTaskDelete = () => {
-    dispatch(removeTask({ id }));
+    dispatch(removeTask(id));
   };
 
   return (

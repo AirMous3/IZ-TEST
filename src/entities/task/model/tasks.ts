@@ -1,16 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export interface tasksInterface {
+import { RootStateType } from '@/app';
+
+export interface TasksInterface {
   description: string;
   id: string;
   date: string;
 }
 
-interface initialStateInterface {
-  data: tasksInterface[];
+interface InitialStateInterface {
+  data: TasksInterface[];
 }
 
-const initialState: initialStateInterface = {
+const initialState: InitialStateInterface = {
   data: [],
 };
 
@@ -18,25 +20,30 @@ export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    addTaskToList: (state, action) => {
-      state.data.push(action.payload.task);
+    addTaskToList: (state, action: PayloadAction<TasksInterface>) => {
+      state.data.push(action.payload);
     },
-    changeTaskDescription: (state, action) => {
-      state.data = state.data.map(({ id, description, date }) =>
-        id === action.payload.id
-          ? {
-              id,
-              date,
-              description: action.payload.description,
-            }
-          : { id, description, date },
-      );
+    changeTaskDescription: (
+      state,
+      action: PayloadAction<{ id: string; description: string }>,
+    ) => {
+      const { id, description } = action.payload;
+
+      const task = state.data.find((task) => task.id === id);
+
+      if (task !== undefined) {
+        task.description = description;
+      }
     },
-    removeTask: (state, action) => {
-      state.data = state.data.filter(({ id }) => id !== action.payload.id);
+    removeTask: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter(({ id }) => id !== action.payload);
     },
   },
 });
 
 export const tasksReducer = tasksSlice.reducer;
-export const { addTaskToList, changeTaskDescription, removeTask } = tasksSlice.actions;
+export const { addTaskToList, changeTaskDescription, removeTask } =
+  tasksSlice.actions;
+
+// Selectors
+export const todosSelector = (state: RootStateType) => state.tasks.data;

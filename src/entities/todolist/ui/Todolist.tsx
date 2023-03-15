@@ -2,13 +2,10 @@ import { Row } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { RootStateType } from '@/app';
-import { TodoItem, tasksInterface } from '@/entities/task';
+import { TodoItem, todosSelector } from '@/entities/task';
 
 export const Todolist: React.FC = () => {
-  const todos = useSelector<RootStateType, tasksInterface[]>(
-    (state) => state.tasks.data,
-  );
+  const todos = useSelector(todosSelector);
 
   return (
     <Row gutter={[16, 16]} justify="center">

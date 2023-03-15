@@ -26,7 +26,7 @@ export const AddTodoItemForm: React.FC = () => {
       date: taskCreationDate(),
     };
 
-    dispatch(addTaskToList({ task }));
+    dispatch(addTaskToList(task ));
 
     setInputState('');
   };
