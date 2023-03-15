@@ -8,19 +8,17 @@ export interface TodoItemInterface {
   dateOfCreate: string;
   description: string;
   id: string;
-  onChangeTodoItemDescription: (id: string, description: string) => void;
 }
 
 export const TodoItem: React.FC<TodoItemInterface> = ({
   dateOfCreate,
   description,
-  onChangeTodoItemDescription,
   id,
 }) => {
   const [editMode, setEditMode] = useState<Boolean>(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeTodoItemDescription(id, e.currentTarget.value);
+    // onChangeTodoItemDescription(id, e.currentTarget.value);
   };
 
   const onBlurEffect = () => {

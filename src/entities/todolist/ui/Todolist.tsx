@@ -1,52 +1,14 @@
 import { Row } from 'antd';
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { TodoItem } from '@/entities/task';
-
+import { RootStateType } from '@/app';
+import { TodoItem, tasksInterface } from '@/entities/task';
 
 export const Todolist: React.FC = () => {
-  const [todos, setTodos] = useState([
-    {
-      description: 'drink milk and more more more',
-      date: new Date().toLocaleTimeString(),
-      id: uuidv4(),
-    },
-    {
-      description: 'drink milk and more more more',
-      date: new Date().toLocaleTimeString(),
-      id: uuidv4(),
-    },
-    {
-      description: 'drink milk and more more more',
-      date: new Date().toLocaleTimeString(),
-      id: uuidv4(),
-    },
-    {
-      description: 'drink milk and more more more',
-      date: new Date().toLocaleTimeString(),
-      id: uuidv4(),
-    },
-    {
-      description: 'drink milk and more more more',
-      date: new Date().toLocaleTimeString(),
-      id: uuidv4(),
-    },
-  ]);
-
-  const changeTodoItemDescription = (_id: string, _description: string) => {
-    setTodos(
-      todos.map(({ id, description, date }) =>
-        id === _id
-          ? {
-              id,
-              description: _description,
-              date,
-            }
-          : { id, description, date },
-      ),
-    );
-  };
+  const todos = useSelector<RootStateType, tasksInterface[]>(
+    (state) => state.tasks.data,
+  );
 
   return (
     <Row gutter={[16, 16]} justify="center">
@@ -56,7 +18,6 @@ export const Todolist: React.FC = () => {
           description={description}
           dateOfCreate={date}
           id={id}
-          onChangeTodoItemDescription={changeTodoItemDescription}
         />
       ))}
     </Row>
