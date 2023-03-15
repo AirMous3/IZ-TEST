@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { addTaskToList } from '@/entities';
+import { taskCreationDate } from '@/helpers';
 
 import * as S from './components';
 
@@ -22,7 +23,7 @@ export const AddTodoItemForm: React.FC = () => {
     const task = {
       id: uuidv4(),
       description: inputState,
-      date: new Date().toLocaleDateString(),
+      date: taskCreationDate(),
     };
 
     dispatch(addTaskToList({ task }));
